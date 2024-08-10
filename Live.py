@@ -1,7 +1,7 @@
 import GuessGame
 import MemoryGame
 import CurrencyRouletteGame
-
+from Score import add_score
 
 def welcome(name):
     return f"Hello {name} and welcome to the World of Games (WoG).\nHere you can find many cool games to play."
@@ -15,6 +15,7 @@ def start_game(game_num, game_diff):
             return GuessGame.play(game_diff)
         case 3:
             return CurrencyRouletteGame.play(game_diff)
+
 
 def choose(choose_type, range_from, range_to):
     choice = 0
@@ -41,4 +42,6 @@ def load_game():
     print("3. Currency Roulette - try and guess the value of a random amount of USD in ILS")
     game_number = choose("number", 1, 3)
     game_difficulty = choose("difficulty", 1, 5)
-    start_game(game_number, game_difficulty)
+    game_win = start_game(game_number, game_difficulty)
+    if game_win:
+        add_score(game_difficulty)
