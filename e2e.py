@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
 
 
 def test_scores_service(url):
@@ -15,5 +16,9 @@ def test_scores_service(url):
         return False
 
 
+def main_function():
+    if test_scores_service("http://127.0.0.1:5000"):
+        os.waitstatus_to_exitcode(0)
+    else:
+        os.waitstatus_to_exitcode(-1)
 
-test_scores_service("http://127.0.0.1:5000")
