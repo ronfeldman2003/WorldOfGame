@@ -17,8 +17,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build the Docker image
-                    docker.build(DOCKER_IMAGE)
+                    // Build the Docker image from the Dockerfile in the repository
+                    docker.build(DOCKER_IMAGE, "-f Dockerfile .")
                 }
             }
         }
