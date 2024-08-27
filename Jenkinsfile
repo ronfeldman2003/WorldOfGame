@@ -28,8 +28,8 @@ pipeline {
                 script {
                     // Run the Docker container
                     sh """
-                    docker run -d --name scores_app -p ${APP_PORT}:5000 \
-                    -v $(pwd)/Scores.txt:/app/Scores.txt ${DOCKER_IMAGE}
+                    docker run -d --name scores_app -p \${APP_PORT}:5000 \
+                    -v \$(pwd)/Scores.txt:/app/Scores.txt \${DOCKER_IMAGE}
                     """
                 }
             }
