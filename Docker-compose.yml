@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: ronfeldman/wogflask:latest
+    container_name: your-container-name
+    ports:
+      - "8777:3000"
