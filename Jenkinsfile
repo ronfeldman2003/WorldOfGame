@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "ronfeldman/wog:latest"
+        DOCKER_IMAGE = "yourdockerhubusername/yourimagename:latest"
         APP_PORT = "8777"
     }
 
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image from the Dockerfile in the repository
-                    docker.build(DOCKER_IMAGE, "-f Dockerfile .")
+                    sh "docker build -t \${DOCKER_IMAGE} ."
                 }
             }
         }
@@ -56,9 +56,8 @@ pipeline {
                     sh "docker stop scores_app && docker rm scores_app"
 
                     // Push the Docker image to DockerHub
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub_credentials') {
-                        docker.image(DOCKER_IMAGE).push()
-                    }
+                    sh "docker login -u <your-username> -p <your-password>"
+                    sh "docker push \${DOCKER_IMAGE}"
                 }
             }
         }
