@@ -1,12 +1,15 @@
 pipeline {
     agent any
     tools {
-        git 'Default' // Matches the name you set in the Global Tool Configuration
+        git 'Default Git' // Use the name set in Global Tool Configuration
     }
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/main']],
+                          userRemoteConfigs: [[url: 'https://github.com/ronfeldman2003/WorldOfGame']]
+                ])
             }
         }
     }
