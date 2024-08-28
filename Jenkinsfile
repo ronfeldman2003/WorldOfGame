@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/ronfeldman2003/WorldOfGame'
+                git 'Default' branch: 'main', url: 'https://github.com/ronfeldman2003/WorldOfGame'
             }
         }
 
