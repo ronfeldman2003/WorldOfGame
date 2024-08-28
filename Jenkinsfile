@@ -8,14 +8,8 @@ pipeline {
             }
         }
         stage('build') {
-            agent {
-                docker {
-                    image 'docker:dind'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
-                sh 'docker-compose build'
+                sh 'docker build -t wogflasktest .'
             }
         }
     }
