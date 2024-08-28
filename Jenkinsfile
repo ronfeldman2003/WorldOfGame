@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        git 'Default Git' // Use the name set in Global Tool Configuration
+        git 'Default' // Use the name set in Global Tool Configuration
     }
     stages {
         stage('Checkout') {
