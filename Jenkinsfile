@@ -10,19 +10,18 @@ pipeline {
             steps {
                 sh '''
                 echo "building docker file for test"
-                docker-compose build' .
+                docker-compose build
                 '''
             }
         }
-         stage('run') {
+        stage('run') {
             steps {
                 sh '''
-                echo "runing  docker file for test"
+                echo "running docker file for test"
                 echo 99999 > Scores.txt
                 cat Scores.txt
                 ls -l $(pwd)/Scores.txt
                 docker-compose up
-
                 '''
             }
         }
