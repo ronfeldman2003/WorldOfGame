@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh '''
                 echo "building docker file for test"
-                docker build -t flasktest .
+                docker-compose build' .
                 '''
             }
         }
@@ -21,8 +21,7 @@ pipeline {
                 echo 99999 > Scores.txt
                 cat Scores.txt
                 ls -l $(pwd)/Scores.txt
-                docker run -it --entrypoint /bin/sh -v /var/jenkins_home/workspace/Wog_flask/Scores.txt:/app/tmp/Scores.txt:ro flasktest
-                ls -l /app/tmp
+                docker-compose up
 
                 '''
             }
