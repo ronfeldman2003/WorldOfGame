@@ -14,5 +14,15 @@ pipeline {
                 '''
             }
         }
+         stage('run') {
+            steps {
+                sh '''
+                echo "runing  docker file for test"
+                echo 99999 > Scores.txt
+                cat Scores.txt
+                docker build -v Scores.txt:/app/Scores.txt -p 8777:3000 -t flasktest .
+                '''
+            }
+        }
     }
 }
