@@ -21,7 +21,7 @@ pipeline {
                 echo 99999 > Scores.txt
                 cat Scores.txt
                 ls -l $(pwd)/Scores.txt
-                docker run -v $(pwd)/Scores.txt:/app/Scores.txt -p 8777:3000 -t flasktest
+                docker run -v $(pwd)/Scores.txt:/app/Scores.txt:ro -p 8777:3000 -t flasktest
                 '''
             }
         }
