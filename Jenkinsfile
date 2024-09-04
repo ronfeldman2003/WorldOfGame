@@ -22,6 +22,9 @@ pipeline {
                 cat Scores.txt
                 ls -l $(pwd)/Scores.txt
                 docker run -v $(pwd)/Scores.txt:/app/tmp/Scores.txt:ro -p 8777:3000 -t flasktest
+                docker run -it --entrypoint /bin/sh -v /var/jenkins_home/workspace/Wog_flask/Scores.txt:/app/tmp/Scores.txt:ro flasktest
+                ls -l /app/tmp
+
                 '''
             }
         }
