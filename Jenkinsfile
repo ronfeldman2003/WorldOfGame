@@ -6,5 +6,10 @@ pipeline {
                 checkout scm
             }
         }
+        tage('build') {
+            steps {
+                sh "docker build flasktest ."
+            }
+        }
     }
 }
