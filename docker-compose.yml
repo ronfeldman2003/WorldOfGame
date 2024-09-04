@@ -9,6 +9,6 @@ services:
     volumes:
       - type: bind
         source: ${PWD}/Scores.txt
-        target: /app/Scores.txt
+        target: /app/tmp/Scores.txt
     ports:
       - "8777:3000"
