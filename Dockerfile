@@ -1,8 +1,7 @@
 FROM python:3.12-slim
 
 WORKDIR /app
-COPY MainScores.py Utils.py /app
-COPY Scores.txt /app/Scores.txt
+COPY MainScores.py Utils.py /app/
 RUN pip install flask
 EXPOSE 3000
 
