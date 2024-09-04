@@ -7,6 +7,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - /var/jenkins_home/workspace/Wog_flask/Scores.txt:/app/tmp/Scores.txt:ro
+      - type: bind
+        source: ${PWD}/Scores.txt
+        target: /app/Scores.txt
     ports:
       - "8777:3000"
