@@ -20,7 +20,7 @@ pipeline {
                 echo "runing  docker file for test"
                 echo 99999 > Scores.txt
                 cat Scores.txt
-                docker run -v Scores.txt:/app/Scores.txt -p 8777:3000 -t flasktest .
+                docker run -v Scores.txt:/app/Scores.txt -p 8777:3000 -t flasktest
                 '''
             }
         }
