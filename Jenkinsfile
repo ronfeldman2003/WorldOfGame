@@ -8,7 +8,10 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh "docker build -t flasktest ."
+                sh '''
+                echo "building docker file for test" 
+                docker build -t flasktest .
+                '''
             }
         }
     }
