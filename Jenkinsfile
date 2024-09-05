@@ -24,6 +24,15 @@ pipeline {
                 script {
                     echo 'Starting Docker container with Docker Compose'
                     sh '''
+                    echo "running docker file for test"
+                    mkdir -p tmp
+                    cd tmp
+                    echo 99999 > Scores.txt
+                    cat Scores.txt
+                    cd ..
+                    ls -l $(pwd)/tmp/Scores.txt
+                    ls -la
+                    ls -la $(pwd)/tmp
                     docker-compose up -d
                     docker-compose exec flaskapp sh -c 'ls -la /app/tmp'
                     '''
