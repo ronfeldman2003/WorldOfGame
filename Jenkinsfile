@@ -30,6 +30,7 @@ pipeline {
                 docker run -d --name flasktest_container -p 8777:3000 -v /var/jenkins_home/workspace/Wog_flask/tmp/Scores112.txt:/app/testfile flasktest
                 docker exec flasktest_container pwd
                 docker exec flasktest_container ls -la
+                docker exec flasktest_container ls -la /app/testfile
 
                 '''
             }
