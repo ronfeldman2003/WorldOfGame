@@ -24,10 +24,23 @@ pipeline {
                 echo "File details:"
                 ls -l ${WORKSPACE}/Scores.txt
 
-                echo "Running Docker container"
+                echo "Running Docker container with file mount"
+
+                # Make sure /app/tmp is available in the container
                 docker run -d --name flasktest_container \
                     -u 1000:1000 \
-                    -v ${WORKSPACE}/Scores.txt:/app/tmp/Scores.txt \
+                    flasktest
+
+                # Ensure that /app/tmp does not have a pre-existing Scores.txt directory
+                docker exec flasktest_container sh -c 'rm -rf /app/tmp/Scores.txt && mkdir -p /app/tmp'
+
+                # Stop the container to re-run with the file mount
+                docker stop flasktest_container
+
+                # Re-run the container with the correct file mount
+                docker run -d --name flasktest_container \
+                    -u 1000:1000 \
+                    -v ${WORKSPACE}/Scores.txt:/app/tmp/Scores.txt:rw \
                     -p 8777:3000 \
                     flasktest
 
