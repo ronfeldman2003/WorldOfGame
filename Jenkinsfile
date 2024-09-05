@@ -3,9 +3,9 @@ pipeline {
         dockerfile {
             filename 'Dockerfile.build'
             additionalBuildArgs "--build-arg UID=${userId}"
-                reuseNode true
-            }
+            reuseNode true
         }
+    }
     stages {
         stage('Checkout') {
             steps {
