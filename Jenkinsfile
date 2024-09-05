@@ -25,7 +25,6 @@ pipeline {
                     echo 'Starting Docker container with Docker Compose'
                     sh 'docker-compose up -d'
                     docker-compose exec flaskapp sh -c 'ls -la /app/tmp'
-
                 }
             }
         }
