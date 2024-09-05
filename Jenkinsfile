@@ -20,9 +20,8 @@ pipeline {
                 echo "running docker file for test"
                 echo 99999 > Scores.txt
                 cat Scores.txt
-                ls -l $(pwd)/Scores.txt
-                ls -la
-                docker run -u 1000:1000 -v ${PWD}/Scores.txt:/app/tmp/Scores.txt -p 8777:3000 flasktest
+                ls -l $(WORKSPACE)/Scores.txt
+                docker run -u 1000:1000 -v ${WORKSPACE}/Scores.txt:/app/tmp/Scores.txt -p 8777:3000 flasktest
                 '''
             }
         }
