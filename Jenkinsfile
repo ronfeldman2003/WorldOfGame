@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-        dockerfile {
-            filename 'Dockerfile.build'
-            additionalBuildArgs "--build-arg UID=${userId}"
-            reuseNode true
-        }
-    }
+    agent any
     stages {
         stage('Checkout') {
             steps {
