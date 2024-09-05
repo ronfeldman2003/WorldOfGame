@@ -1,48 +1,56 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/dev']],
+                          userRemoteConfigs: [[url: 'https://github.com/ronfeldman2003/WorldOfGame']]])
             }
         }
-        stage('build') {
-            steps {
-                sh '''
-                echo "building docker file for test"
-                docker build -t flasktest .
-                '''
-            }
-        }
-        stage('run') {
-            steps {
-                sh '''
-                echo "running docker file for test"
-                mkdir -p tmp
-                cd tmp
-                echo 99999 > Scores.txt
-                cat Scores.txt
-                cd ..
-                ls -l $(pwd)/tmp/Scores.txt
-                ls -la
-                ls -la $(pwd)/tmp
-                docker run -d --name flasktest_container -p 8777:3000 -v /var/jenkins_home/workspace/Wog_flask/tmp:/app/tmp flasktest
-                docker exec flasktest_container pwd
-                docker exec flasktest_container ls -la
-                docker exec flasktest_container ls -la /app/tmp
 
-                '''
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo 'Building Docker image with Docker Compose'
+                    sh 'docker-compose build'
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    echo 'Starting Docker container with Docker Compose'
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    // Add your test commands here
+                    echo 'Running tests'
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                script {
+                    echo 'Stopping and removing Docker containers'
+                    sh 'docker-compose down'
+                }
             }
         }
     }
+
     post {
         always {
-            sh '''
-            echo "Cleaning up"
-            docker stop flasktest_container || true
-            docker rm flasktest_container || true
-            '''
+            echo 'Cleaning up workspace'
+            cleanWs()
         }
     }
-
 }
