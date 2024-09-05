@@ -24,7 +24,7 @@ pipeline {
                 cat Scores.txt
                 cd ..
                 ls -l $(pwd)/tmp/Scores.txt
-                docker run -d --name flasktest_container -u 1000:1000 -p 8777:3000 --mount source=$(pwd)/tmp,target=/app/tmp
+                docker run -d --name flasktest_container -u 1000:1000 -p 8777:3000 --mount source=$(pwd)/tmp,target=/app/tmp flasktest
                 docker exec flasktest_container ls -la
                 cd tmp
                 docker exec flasktest_container ls -la
