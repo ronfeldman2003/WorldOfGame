@@ -22,7 +22,7 @@ pipeline {
                 cd tmp
                 echo 99999 > Scores112.txt
                 chmod 644 Scores112.txt
-                cat Scores.txt
+                cat Scores112.txt
                 cd ..
                 ls -l $(pwd)/tmp/Scores112.txt
                 ls -la
