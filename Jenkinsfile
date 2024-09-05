@@ -10,8 +10,7 @@ pipeline {
             steps {
                 sh '''
                 echo "building docker file for test"
-                sh 'docker-compose build'
-                // docker build -t flasktest .
+                docker build -t flasktest .
                 '''
             }
         }
