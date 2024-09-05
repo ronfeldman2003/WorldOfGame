@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh '''
                 echo "running docker file for test"
-                mkdir tmp
+                mkdir -p tmp
                 cd tmp
                 echo 99999 > Scores.txt
                 cat Scores.txt
