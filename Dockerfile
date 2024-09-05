@@ -8,3 +8,5 @@ RUN mkdir -p /app/tmp && chmod 777 /app/tmp
 
 
 CMD ["python","MainScores.py"]
+
+VOLUME /app/tmp
