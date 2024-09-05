@@ -3,7 +3,7 @@ services:
   flaskapp:
     build:
       context: .
-      dockerfile: Dockerfile.test
+      dockerfile: Dockerfile
     ports:
       - "8777:3000"
     volumes:
