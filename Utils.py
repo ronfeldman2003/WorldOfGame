@@ -1,6 +1,6 @@
 import os
 
-SCORES_FILE_NAME = "/app/tmp/Scores2.txt"
+SCORES_FILE_NAME = "/app/Scores12.txt"
 BAD_RETURN_CODE = "1"
 
 

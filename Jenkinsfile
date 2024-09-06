@@ -10,7 +10,7 @@ pipeline {
             steps {
                 sh '''
                 echo "building docker file for test"
-                docker build -t flasktest .
+                docker build -t testflask .
                 '''
             }
         }
@@ -20,17 +20,15 @@ pipeline {
                 echo "running docker file for test"
                 mkdir -p tmp
                 cd tmp
-                echo 99999 > Scores12.txt
-                chmod 644 Scores12.txt
-                cat Scores12.txt
+                echo 99999 > Scores.txt
+                chmod 644 Scores.txt
+                cat Scores.txt
                 cd ..
-                ls -l $(pwd)/tmp/Scores12.txt
+                ls -l $(pwd)/tmp/Scores.txt
                 ls -la
                 ls -la $(pwd)/tmp
-                docker run -d --name flasktest_containerScores12 -p 8777:3000 -v /var/jenkins_home/workspace/Wog_flask/tmp/Scores12.txt:/app/Scores12.txt flasktest
-                docker exec flasktest_containerScores12 pwd
-                docker exec flasktest_containerScores12 ls -la
-                docker exec flasktest_containerScores12 ls -la /app/testfile
+                docker run -d --name testflask_container -p 8777:3000 -v ./Scores.txt:/app/Scores.txt testflask
+                docker exec testflask_container ls -la
 
                 '''
             }
