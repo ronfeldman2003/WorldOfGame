@@ -18,18 +18,25 @@ pipeline {
             steps {
                 sh '''
                 echo "running docker file for test"
-                echo 123 > Scores1.txt
-                chmod 777 Scores1.txt
-                cat Scores1.txt
+                echo 123 > Scores.txt
+                chmod 777 Scores.txt
+                cat Scores.txt
                 ls -la
                 pwd
-                WORKSPACE_PATH=$(pwd)
-                docker run -d --name testflask_container -p 8777:3000 -v ${WORKSPACE_PATH}/Scores1.txt:/app/Scores1.txt testflask2
-                docker exec testflask_container ls -la
 
+                # Get the workspace path on the host machine
+                HOST_WORKSPACE_PATH=$(docker inspect ${NODE_NAME} | jq -r '.[0].Mounts[] | select(.Destination == "/var/jenkins_home/workspace/'${JOB_NAME}'") | .Source')
+
+                echo "Host Workspace Path: ${HOST_WORKSPACE_PATH}"
+
+                # Run the container with the host path
+                docker run -d --name testflask_container -p 8777:3000 -v ${HOST_WORKSPACE_PATH}/Scores.txt:/app/Scores.txt testflask2
+
+                # Check the contents of the /app directory in the container
+                docker exec testflask_container ls -la /app
+                docker exec testflask_container cat /app/Scores.txt
                 '''
             }
         }
     }
-
 }
