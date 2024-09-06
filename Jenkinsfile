@@ -22,6 +22,7 @@ pipeline {
                 chmod 777 Scores.txt
                 cat Scores.txt
                 ls -la
+                pwd
                 docker run -d --name testflask_container -p 8777:3000 -v ./Scores.txt:/app/Scores.txt testflask
                 docker exec testflask_container ls -la
 
