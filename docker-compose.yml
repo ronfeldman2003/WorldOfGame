@@ -1,14 +1,10 @@
-version: '3.8'
-
+version: '3'
 services:
   flaskapp:
-    image: flasktest
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - type: bind
-        source: ${PWD}/Scores.txt
-        target: /app/tmp/Scores.txt
     ports:
       - "8777:3000"
+    volumes:
+      - ./tmp:/app/tmp/

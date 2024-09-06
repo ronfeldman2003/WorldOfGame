@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        // Replace this with the actual path on your Mac where Jenkins workspace is mapped
+        MAC_WORKSPACE = '/Users/ronfeldman/jenkins/workspace/WOG_part4'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -10,7 +14,7 @@ pipeline {
             steps {
                 sh '''
                 echo "building docker file for test"
-                docker build -t flasktest .
+                docker build -t testflask2 .
                 '''
             }
         }
@@ -18,15 +22,25 @@ pipeline {
             steps {
                 sh '''
                 echo "running docker file for test"
-                mkdir tmp
-                cd tmp
-                echo 99999 > Scores.txt
+                echo 123 > Scores.txt
+                echo "Contents of Scores.txt:"
                 cat Scores.txt
-                cd ..
-                ls -l $(pwd)/tmp/Scores.txt
-                docker run -v ${PWD}/tmp:/app/tmp -p 8777:3000 flasktest
+                echo "Directory listing:"
+                echo "Current working directory:"
+                pwd
+                echo "Mac Workspace Path: ${MAC_WORKSPACE}"
+                # Run the container with the Mac workspace path
+                docker run -d --name testflask_container -p 8777:3000 -v ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt testflask2
                 '''
             }
+        }
+    }
+    post {
+        always {
+            sh '''
+            docker stop testflask_container || true
+            docker rm testflask_container || true
+            '''
         }
     }
 }
