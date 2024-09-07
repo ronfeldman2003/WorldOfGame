@@ -1,3 +1,5 @@
+import sys
+
 import selenium.common.exceptions
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -16,9 +18,10 @@ def test_scores_service(url):
         return False
 
 
-def main_function():
-    if test_scores_service("http://127.0.0.1:5000"):
-        os.waitstatus_to_exitcode(0)
+def main_function(url):
+    if test_scores_service(url):
+        sys.exit(0)
     else:
-        os.waitstatus_to_exitcode(-1)
+        sys.exit(-1)
+
 
