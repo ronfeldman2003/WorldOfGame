@@ -37,6 +37,12 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
+                # Create a virtual environment
+                python3 -m venv venv
+                # Activate the virtual environment
+                . venv/bin/activate
+                # Install the required packages inside the virtual environment
+                pip install selenium webdriver_manager
                 pip install selenium webdriver_manager
                 python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
                 TEST_EXIT_CODE  = echo $?
