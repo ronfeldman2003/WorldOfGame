@@ -37,7 +37,7 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                python -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
+                python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
                 TEST_EXIT_CODE  = echo $?
                 if [ $TEST_EXIT_CODE -ne 0 ]; then
                     echo "Tests failed with exit code $TEST_EXIT_CODE"
