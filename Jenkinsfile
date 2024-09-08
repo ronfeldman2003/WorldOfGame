@@ -37,7 +37,7 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                    docker exec -it testflask_container curl http://127.0.0.1:8777
+                    docker exec testflask_container curl http://127.0.0.1:8777
 
                     ${VENV_PATH}/python3 -c 'import e2e; e2e.main_function("http://127.0.0.1:8777")'
                     TEST_EXIT_CODE=$?
