@@ -22,7 +22,7 @@ pipeline {
             steps {
                 sh '''
                 echo "running docker file for test"
-                echo 123 > Scores.txt
+                echo 9999999999 > Scores.txt
                 echo "Contents of Scores.txt:"
                 cat Scores.txt
                 echo "Directory listing:"
