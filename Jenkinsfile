@@ -40,7 +40,6 @@ pipeline {
                 python3 -m venv venv
                 . venv/bin/activate
                 pip install selenium webdriver_manager
-                python e2e_test.py
                 python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
                 deactivate
                 TEST_EXIT_CODE  = echo $?
