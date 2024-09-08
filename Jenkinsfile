@@ -34,6 +34,29 @@ pipeline {
                 '''
             }
         }
+         stage('Install Chrome and ChromeDriver') {
+            steps {
+                sh '''
+                    # Install Chrome
+                    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                    sudo apt-get update
+                    sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+                    rm google-chrome-stable_current_amd64.deb
+
+                    # Install ChromeDriver
+                    CHROME_VERSION=$(google-chrome --version | awk '{ print $3 }' | awk -F'.' '{ print $1 }')
+                    wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}
+                    CHROMEDRIVER_VERSION=$(cat LATEST_RELEASE_${CHROME_VERSION})
+                    wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+                    unzip chromedriver_linux64.zip
+                    sudo mv chromedriver /usr/local/bin/chromedriver
+                    sudo chmod +x /usr/local/bin/chromedriver
+
+                    # Clean up
+                    rm LATEST_RELEASE_${CHROME_VERSION} chromedriver_linux64.zip
+                '''
+            }
+        }
         stage('test') {
             steps {
                 sh '''

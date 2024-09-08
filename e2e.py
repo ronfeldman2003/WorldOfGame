@@ -3,16 +3,17 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import sys
 
 
 def test_scores_service(url):
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = Options()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
 
-    service = Service(executable_path='/usr/local/bin/chromedriver')
+    service = Service('/usr/local/bin/chromedriver')
 
     with webdriver.Chrome(service=service, options=chrome_options) as driver:
         driver.get(url)
