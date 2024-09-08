@@ -40,10 +40,13 @@ pipeline {
                     python3 --version
                     which python3
 
-                    # Check if virtualenv is installed, if not, install it
-                    if ! python3 -m virtualenv --version &> /dev/null; then
-                        python3 -m pip install --user virtualenv
-                    fi
+                    # Install pip
+                    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+                    python3 get-pip.py --user
+                    export PATH=$PATH:$HOME/.local/bin
+
+                    # Install virtualenv
+                    python3 -m pip install --user virtualenv
 
                     # Create and activate virtual environment
                     python3 -m virtualenv venv
@@ -67,6 +70,9 @@ pipeline {
                     else
                         echo "Tests passed"
                     fi
+
+                    # Clean up
+                    rm -f get-pip.py
                 '''
             }
         }
