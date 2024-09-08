@@ -4,8 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import sys
-
 
 def test_scores_service(url):
     chrome_options = Options()
@@ -13,7 +13,7 @@ def test_scores_service(url):
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
 
-    service = Service('/usr/local/bin/chromedriver')
+    service = Service(ChromeDriverManager().install())
 
     with webdriver.Chrome(service=service, options=chrome_options) as driver:
         driver.get(url)
@@ -24,11 +24,8 @@ def test_scores_service(url):
             print(f"An error occurred: {e}")
             return False
 
-
 def main_function(url):
     if test_scores_service(url):
         sys.exit(0)
     else:
         sys.exit(-1)
-
-
