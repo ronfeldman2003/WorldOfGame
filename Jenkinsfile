@@ -30,7 +30,7 @@ pipeline {
                 pwd
                 echo "Mac Workspace Path: ${MAC_WORKSPACE}"
                 # Run the container with the Mac workspace path
-                docker run -d --name testflask_container --network my_network -p 8777:3000 -v ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt testflask2
+                docker run -d --name testflask_container -p 8777:3000 -v ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt testflask2
                 curl curl http://host.docker.internal:8777
 
 
