@@ -10,7 +10,11 @@ import sys
 
 def test_scores_service(url):
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Run headless Chrome
+    chrome_options.add_argument("--headless")  # Run Chromium in headless mode
+    chrome_options.add_argument("--no-sandbox")  # Disable sandbox for Docker
+    chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems in Docker
+    chrome_options.binary_location = '/usr/bin/chromium'  # Path to the Chromium binary
+
     service = Service('/usr/bin/chromedriver')  # Path to chromedriver
     with webdriver.Chrome(service=service, options=chrome_options) as driver:
         driver.get(url)
