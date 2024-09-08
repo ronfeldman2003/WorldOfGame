@@ -6,6 +6,7 @@ RUN pip install flask
 RUN apt-get update && apt-get install -y curl
 
 EXPOSE 3000
+EXPOSE 8777
 
 
 CMD ["python","MainScores.py"]
