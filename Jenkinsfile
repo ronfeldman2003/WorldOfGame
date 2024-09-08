@@ -32,8 +32,6 @@ pipeline {
                 # Run the container with the Mac workspace path
                 docker run -d --name testflask_container -p 8777:3000 -v ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt testflask2
                 curl http://127.0.0.1:8777
-                curl http://127.0.0.1:3000
-                curl http://127.0.0.1:8080
 
 
                 '''
