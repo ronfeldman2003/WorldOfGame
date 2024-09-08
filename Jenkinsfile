@@ -37,31 +37,9 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                    python3 --version
-                    which python3
-
-                    # Install pip
-                    curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-                    python3 get-pip.py --user
-                    export PATH=$PATH:$HOME/.local/bin
-
-                    # Install virtualenv
-                    python3 -m pip install --user virtualenv
-
-                    # Create and activate virtual environment
-                    python3 -m virtualenv venv
-                    . venv/bin/activate
-
-                    # Install required packages
-                    python3 -m pip install --upgrade pip
-                    python3 -m pip install selenium webdriver_manager
-
-                    # Run the test
                     python3 -c 'import e2e; e2e.main_function("http://127.0.0.1:8777")'
                     TEST_EXIT_CODE=$?
 
-                    # Deactivate virtual environment
-                    deactivate
 
                     # Check test result
                     if [ $TEST_EXIT_CODE -ne 0 ]; then
@@ -71,9 +49,7 @@ pipeline {
                         echo "Tests passed"
                     fi
 
-                    # Clean up
-                    rm -f get-pip.py
-                '''
+                    '''
             }
         }
     }
