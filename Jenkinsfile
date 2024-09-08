@@ -37,23 +37,37 @@ pipeline {
          stage('Install Chrome and ChromeDriver') {
             steps {
                 sh '''
-                    # Install Chrome
-                    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                    # Install dependencies
                     sudo apt-get update
-                    sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
-                    rm google-chrome-stable_current_amd64.deb
+                    sudo apt-get install -y curl unzip
+
+                    # Install Chrome
+                    echo "Downloading Chrome..."
+                    if ! curl -L -o google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; then
+                        echo "Failed to download Chrome. Trying alternative method..."
+                        sudo apt-get install -y chromium-browser
+                    else
+                        sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+                        rm google-chrome-stable_current_amd64.deb
+                    fi
 
                     # Install ChromeDriver
-                    CHROME_VERSION=$(google-chrome --version | awk '{ print $3 }' | awk -F'.' '{ print $1 }')
-                    wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}
-                    CHROMEDRIVER_VERSION=$(cat LATEST_RELEASE_${CHROME_VERSION})
-                    wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+                    echo "Installing ChromeDriver..."
+                    CHROME_VERSION=$(google-chrome --version 2>/dev/null | awk '{ print $3 }' | awk -F'.' '{ print $1 }') || CHROME_VERSION=$(chromium-browser --version 2>/dev/null | awk '{ print $2 }' | awk -F'.' '{ print $1 }')
+                    CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
+                    curl -L -o chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
                     unzip chromedriver_linux64.zip
                     sudo mv chromedriver /usr/local/bin/chromedriver
                     sudo chmod +x /usr/local/bin/chromedriver
 
                     # Clean up
-                    rm LATEST_RELEASE_${CHROME_VERSION} chromedriver_linux64.zip
+                    rm chromedriver_linux64.zip
+
+                    # Verify installations
+                    echo "Chrome version:"
+                    google-chrome --version || chromium-browser --version
+                    echo "ChromeDriver version:"
+                    chromedriver --version
                 '''
             }
         }
