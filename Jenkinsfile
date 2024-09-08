@@ -3,6 +3,7 @@ pipeline {
     environment {
         MAC_WORKSPACE = '/Users/ronfeldman/jenkins/workspace/WOG_part4'
         VENV_PATH = '/opt/venv/bin'
+        VALUE_FOR_SCORES_FILE = "111"
     }
     stages {
         stage('Checkout') {
@@ -22,7 +23,7 @@ pipeline {
             steps {
                 sh '''
                 echo "running docker file for test"
-                echo 9999999999 > Scores.txt
+                echo  ${VALUE_FOR_SCORES_FILE} > Scores.txt
                 echo "Contents of Scores.txt:"
                 cat Scores.txt
                 echo "Directory listing:"
