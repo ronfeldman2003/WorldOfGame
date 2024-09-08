@@ -39,14 +39,28 @@ pipeline {
                 sh '''
                     python3 --version
                     which python3
-                    pip3 install virtualenv
-                    virtualenv venv
+
+                    # Check if virtualenv is installed, if not, install it
+                    if ! python3 -m virtualenv --version &> /dev/null; then
+                        python3 -m pip install --user virtualenv
+                    fi
+
+                    # Create and activate virtual environment
+                    python3 -m virtualenv venv
                     . venv/bin/activate
-                    pip install --upgrade pip
-                    pip install selenium webdriver_manager
+
+                    # Install required packages
+                    python3 -m pip install --upgrade pip
+                    python3 -m pip install selenium webdriver_manager
+
+                    # Run the test
                     python3 -c 'import e2e; e2e.main_function("http://127.0.0.1:8777")'
-                    deactivate
                     TEST_EXIT_CODE=$?
+
+                    # Deactivate virtual environment
+                    deactivate
+
+                    # Check test result
                     if [ $TEST_EXIT_CODE -ne 0 ]; then
                         echo "Tests failed with exit code $TEST_EXIT_CODE"
                         exit 1
