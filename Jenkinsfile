@@ -58,5 +58,14 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            sh '''
+            echo "Cleaning up"
+            docker stop flasktest_container || true
+            docker rm flasktest_container || true
+            '''
+        }
+    }
 
 }
