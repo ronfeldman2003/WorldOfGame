@@ -29,4 +29,4 @@ def main_function(url):
     if test_scores_service(url):
         sys.exit(0)
     else:
-        sys.exit(123)#fortest
+        sys.exit(11)#fortest
