@@ -38,16 +38,16 @@ pipeline {
             steps {
                 sh '''
                     # Install dependencies
-                    sudo apt-get update
-                    sudo apt-get install -y curl unzip
+                    apt-get update
+                    apt-get install -y curl unzip
 
                     # Install Chrome
                     echo "Downloading Chrome..."
                     if ! curl -L -o google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; then
                         echo "Failed to download Chrome. Trying alternative method..."
-                        sudo apt-get install -y chromium-browser
+                        apt-get install -y chromium-browser
                     else
-                        sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
+                        apt-get install -y ./google-chrome-stable_current_amd64.deb
                         rm google-chrome-stable_current_amd64.deb
                     fi
 
@@ -57,8 +57,8 @@ pipeline {
                     CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
                     curl -L -o chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
                     unzip chromedriver_linux64.zip
-                    sudo mv chromedriver /usr/local/bin/chromedriver
-                    sudo chmod +x /usr/local/bin/chromedriver
+                    mv chromedriver /usr/local/bin/chromedriver
+                    chmod +x /usr/local/bin/chromedriver
 
                     # Clean up
                     rm chromedriver_linux64.zip
