@@ -37,18 +37,20 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-
+                python3 --version
+                which python3
                 python3 -m venv venv
                 . venv/bin/activate
                 pip install selenium webdriver_manager
                 python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
                 deactivate
-                TEST_EXIT_CODE  = echo $?
+                TEST_EXIT_CODE=$?
                 if [ $TEST_EXIT_CODE -ne 0 ]; then
                     echo "Tests failed with exit code $TEST_EXIT_CODE"
                     exit 1
                 else
                     echo "Tests passed"
+                fi
                 '''
             }
         }
