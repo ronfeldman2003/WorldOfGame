@@ -10,12 +10,8 @@ import sys
 
 def test_scores_service(url):
     chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-
-    service = Service(ChromeDriverManager().install())
-
+    chrome_options.add_argument("--headless")  # Run headless Chrome
+    service = Service('/usr/lib/chromium-browser/chromedriver')  # Path to chromedriver
     with webdriver.Chrome(service=service, options=chrome_options) as driver:
         driver.get(url)
         try:
