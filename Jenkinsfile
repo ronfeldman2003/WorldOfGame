@@ -37,9 +37,7 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                apt install chromium-browser
-                google-chrome --version
-                apt install python3-selenium -y
+                pip install selenium webdriver_manager
                 python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
                 TEST_EXIT_CODE  = echo $?
                 if [ $TEST_EXIT_CODE -ne 0 ]; then
