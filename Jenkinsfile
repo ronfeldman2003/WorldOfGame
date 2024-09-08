@@ -37,7 +37,9 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                pip install selenium webdriver_manager
+                apt-get update && apt-get install -y pipx
+                pipx install selenium
+                pipx install webdriver_manager
                 python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
                 TEST_EXIT_CODE  = echo $?
                 if [ $TEST_EXIT_CODE -ne 0 ]; then
