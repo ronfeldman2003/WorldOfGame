@@ -37,10 +37,12 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                apt-get update && apt-get install -y pipx
-                pipx install selenium
-                pipx install webdriver_manager
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install selenium webdriver_manager
+                python e2e_test.py
                 python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
+                deactivate
                 TEST_EXIT_CODE  = echo $?
                 if [ $TEST_EXIT_CODE -ne 0 ]; then
                     echo "Tests failed with exit code $TEST_EXIT_CODE"
