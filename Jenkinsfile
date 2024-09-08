@@ -34,24 +34,6 @@ pipeline {
                 '''
             }
         }
-        stage('Install Chromium and ChromeDriver') {
-            steps {
-                sh '''
-                    # Update package lists
-                    apt-get update
-
-                    # Install Chromium and ChromeDriver
-                    apt-get install -y chromium chromium-driver
-
-                    # Verify installations
-                    echo "Chromium version:"
-                    chromium --version
-                    echo "ChromeDriver version:"
-                    chromedriver --version
-                '''
-            }
-        }
-
         stage('test') {
             steps {
                 sh '''
