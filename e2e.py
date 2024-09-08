@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import sys
 
+
 def test_scores_service(url):
     chrome_options = Options()
     chrome_options.add_argument('--headless')
@@ -28,4 +29,4 @@ def main_function(url):
     if test_scores_service(url):
         sys.exit(0)
     else:
-        sys.exit(-1)
+        sys.exit(123)#fortest
