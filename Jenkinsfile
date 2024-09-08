@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        // Replace this with the actual path on your Mac where Jenkins workspace is mapped
         MAC_WORKSPACE = '/Users/ronfeldman/jenkins/workspace/WOG_part4'
+        VENV_PATH = '/opt/venv/bin'
     }
     stages {
         stage('Checkout') {
@@ -37,7 +37,7 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                    python3 -c 'import e2e; e2e.main_function("http://127.0.0.1:8777")'
+                    ${VENV_PATH}/python3 -c 'import e2e; e2e.main_function("http://127.0.0.1:8777")'
                     TEST_EXIT_CODE=$?
 
 
