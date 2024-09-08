@@ -37,8 +37,10 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                apt install google-chrome
-                google-chrome --version
+                sudo apt install wget
+                wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                sudo dpkg -i google-chrome-stable_current_amd64.deb
+                google-chrome
                 apt install python3-selenium -y
                 python3 -c 'import e2e;e2e.main_function("http://127.0.0.1:8777")'
                 TEST_EXIT_CODE  = echo $?
