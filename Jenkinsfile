@@ -37,20 +37,6 @@ pipeline {
         stage('test') {
             steps {
                 sh '''
-                # Install Chrome for ARM64
-                wget https://dl.google.com/linux/direct/google-chrome-stable_current_arm64.deb
-                apt-get update
-                apt-get install -y ./google-chrome-stable_current_arm64.deb
-
-                # Install ChromeDriver for ARM64
-                CHROME_VERSION=$(google-chrome --version | awk '{ print $3 }' | awk -F'.' '{ print $1 }')
-                wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}
-                CHROMEDRIVER_VERSION=$(cat LATEST_RELEASE_${CHROME_VERSION})
-                wget https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
-                unzip chromedriver_linux64.zip
-                mv chromedriver /usr/local/bin/chromedriver
-                chmod +x /usr/local/bin/chromedriver
-
 
                 python3 -m venv venv
                 . venv/bin/activate
