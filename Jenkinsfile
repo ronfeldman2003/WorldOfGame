@@ -34,43 +34,24 @@ pipeline {
                 '''
             }
         }
-         stage('Install Chrome and ChromeDriver') {
+        stage('Install Chromium and ChromeDriver') {
             steps {
                 sh '''
-                    # Install dependencies
+                    # Update package lists
                     apt-get update
-                    apt-get install -y curl unzip
 
-                    # Install Chrome
-                    echo "Downloading Chrome..."
-                    if ! curl -L -o google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; then
-                        echo "Failed to download Chrome. Trying alternative method..."
-                        apt-get install -y chromium-browser
-                    else
-                        apt-get install -y ./google-chrome-stable_current_amd64.deb
-                        rm google-chrome-stable_current_amd64.deb
-                    fi
-
-                    # Install ChromeDriver
-                    echo "Installing ChromeDriver..."
-                    CHROME_VERSION=$(google-chrome --version 2>/dev/null | awk '{ print $3 }' | awk -F'.' '{ print $1 }') || CHROME_VERSION=$(chromium-browser --version 2>/dev/null | awk '{ print $2 }' | awk -F'.' '{ print $1 }')
-                    CHROMEDRIVER_VERSION=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}")
-                    curl -L -o chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
-                    unzip chromedriver_linux64.zip
-                    mv chromedriver /usr/local/bin/chromedriver
-                    chmod +x /usr/local/bin/chromedriver
-
-                    # Clean up
-                    rm chromedriver_linux64.zip
+                    # Install Chromium and ChromeDriver
+                    apt-get install -y chromium chromium-driver
 
                     # Verify installations
-                    echo "Chrome version:"
-                    google-chrome --version || chromium-browser --version
+                    echo "Chromium version:"
+                    chromium --version
                     echo "ChromeDriver version:"
                     chromedriver --version
                 '''
             }
         }
+
         stage('test') {
             steps {
                 sh '''
