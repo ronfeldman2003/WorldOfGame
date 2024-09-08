@@ -31,6 +31,8 @@ pipeline {
                 echo "Mac Workspace Path: ${MAC_WORKSPACE}"
                 # Run the container with the Mac workspace path
                 docker run -d --name testflask_container -p 8777:3000 -v ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt testflask2
+                curl http://127.0.0.1:8777
+
                 '''
             }
         }
@@ -38,7 +40,6 @@ pipeline {
             steps {
                 sh '''
 
-                    curl http://127.0.0.1:8777
 
                     ${VENV_PATH}/python3 -c 'import e2e; e2e.main_function("http://127.0.0.1:8777")'
                     TEST_EXIT_CODE=$?
@@ -56,12 +57,6 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            sh '''
-            docker stop testflask_container || true
-            docker rm testflask_container || true
-            '''
-        }
+
     }
 }
