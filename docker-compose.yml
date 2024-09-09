@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ronfeldman/flask_wog
+    image: ronfeldman/flask_wog:latest
     environment:
       - MAC_WORKSPACE=${MAC_WORKSPACE}
     ports:
