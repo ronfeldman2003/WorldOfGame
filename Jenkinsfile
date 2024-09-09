@@ -64,6 +64,7 @@ pipeline {
         always {
             sh '''
             echo "Cleaning up"
+            docker-compose push
             docker-compose down
             #docker stop testflask_container || true
             #docker rm testflask_container || true
