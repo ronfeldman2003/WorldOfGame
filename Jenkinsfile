@@ -43,7 +43,7 @@ pipeline {
             steps {
                 sh '''
 
-
+                    cd tests
                     ${VENV_PATH}/python3 -c 'import e2e; e2e.main_function("http://host.docker.internal:8777")'
                     TEST_EXIT_CODE=$?
 
