@@ -1,8 +1,8 @@
 FROM python:3.12-slim
 
 WORKDIR /app
-COPY MainScores.py Utils.py /app/
-RUN pip install flask
+COPY requirements.txt MainScores.py Utils.py /app/
+RUN pip install -r requirements.txt
 RUN apt-get update && apt-get install -y curl
 
 EXPOSE 3000
