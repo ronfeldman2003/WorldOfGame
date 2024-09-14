@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh '''
                 echo "building docker file for test"
-                docker build -t testflask2 .
+                docker-compose build
                 '''
             }
         }
@@ -31,7 +31,8 @@ pipeline {
                 pwd
                 echo "Mac Workspace Path: ${MAC_WORKSPACE}"
                 # Run the container with the Mac workspace path
-                docker run -d --name testflask_container -p 8777:3000 -v ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt testflask2
+                docker-compose up --detach
+                #docker run -d --name testflask_container -p 8777:3000 -v ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt testflask2
 
 
 
@@ -63,8 +64,10 @@ pipeline {
         always {
             sh '''
             echo "Cleaning up"
-            docker stop testflask_container || true
-            docker rm testflask_container || true
+            docker-compose push
+            docker-compose down
+            #docker stop testflask_container || true
+            #docker rm testflask_container || true
             '''
         }
     }

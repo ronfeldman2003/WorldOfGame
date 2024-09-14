@@ -4,7 +4,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: ronfeldman/flask_wog:latest
+    environment:
+      - MAC_WORKSPACE=${MAC_WORKSPACE}
     ports:
       - "8777:3000"
     volumes:
-      - ./tmp:/app/tmp/
+      - ${MAC_WORKSPACE}/Scores.txt:/app/Scores.txt
